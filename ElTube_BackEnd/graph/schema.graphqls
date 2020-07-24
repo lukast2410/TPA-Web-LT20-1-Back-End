@@ -1,0 +1,178 @@
+type Video{
+  id: ID!
+  channel_id: Int!
+  title: String!
+  description: String!
+  views: Int!
+  like: Int!
+  dislike: Int!
+  comment: Int!
+  visibility: String!
+  restrict: String!
+  day: Int!
+  month: Int!
+  year: Int!
+  hours: Int!
+  minutes: Int!
+  seconds: Int!
+  video_path: String!
+  thumbnail_path: String!
+  category: String!
+  location: String!
+  premium: String!
+  duration: Int!
+}
+
+type User{
+  id: ID!
+  name: String!
+  email: String!
+  photourl: String!
+  location: String!
+  restricted: String!
+  premium: String!
+}
+
+type Playlist{
+  id: ID!
+  user_id: Int!
+  name: String!
+  description: String!
+  view: Int!
+  day: Int!
+  month: Int!
+  year: Int!
+  visibility: String!
+}
+
+type Channel{
+  id: ID!
+  user_id: Int!
+  name: String!
+  description: String!
+  stats: String!
+  subscriber: Int!
+  day: Int!
+  month: Int!
+  year: Int!
+  icon_path: String!
+  art_path: String!
+  channel_link: String!
+}
+
+type Comment{
+  id: ID!
+  user_id: Int!
+  video_id: Int!
+  day: Int!
+  month: Int!
+  year: Int!
+  description: String!
+  reply: String!
+  comment_id: Int!
+}
+
+type Queue{
+  id: ID!
+  user_id: Int!
+  video_id: Int!
+}
+
+type Activity{
+  to: String!
+  from: String!
+  tipe: String!
+}
+
+type Category{
+  id: ID!
+  name: String!
+  subscriber: String!
+}
+
+type Query{
+  videosForHome(location: String!, visibility: String!, premium: String!): [Video!]!
+  relatedVideos(id: ID!, location: String!, category: String!, visibility: String!,
+    premium: String!): [Video!]!
+  checkActivity(cond: String!, to: String!, from: String!): Activity!
+  getVideo(id: ID!): Video!
+  getOneCategory(category: String!): Category!
+  categoryAllTime(category: String!): [Video!]!
+  categoryThisWeek(category: String!): [Video!]!
+  categoryThisMonth(category: String!): [Video!]!
+  categoryRecently(category: String!): [Video!]!
+}
+
+input newVideo{
+  channel_id: Int!
+  title: String!
+  description: String!
+  views: Int!
+  like: Int!
+  dislike: Int!
+  comment: Int!
+  visibility: String!
+  restrict: String!
+  day: Int!
+  month: Int!
+  year: Int!
+  hours: Int!
+  minutes: Int!
+  seconds: Int!
+  video_path: String!
+  thumbnail_path: String!
+  category: String!
+  location: String!
+  premium: String!
+  duration: Int!
+}
+
+input newUser{
+  name: String!
+  email: String!
+  photourl: String!
+  location: String!
+  restricted: String!
+  premium: String!
+}
+
+input newChannel{
+  user_id: Int!
+  name: String!
+  description: String!
+  stats: String!
+  subscriber: Int!
+  day: Int!
+  month: Int!
+  year: Int!
+  icon_path: String!
+  art_path: String!
+  channel_link: String!
+}
+
+input newActivity{
+  to: String!
+  from: String!
+  tipe: String!
+}
+
+input newCategory{
+  name: String!
+  subscriber: String!
+}
+
+type Mutation{
+  createVideo(input: newVideo): Video!
+  updateVideo(id: ID!, input: newVideo): Video!
+  deleteVideo(id: ID!): Boolean!
+  getOneVideo(id: ID!): Video!
+  createUser(input: newUser): User!
+  updateUser(email: String!, input: newUser): User!
+  getOneUser(email: String!): User!
+  createChannel(input: newChannel): Channel!
+  getOneChannelByUser(user_id: Int!): Channel!
+  getOneChannelByID(id: ID!): Channel!
+  createActivity(input: newActivity): Activity!
+  deleteActivity(input: newActivity): Boolean!
+  doActivity(table: String!, id: ID!, do: Int!): Boolean!
+}
