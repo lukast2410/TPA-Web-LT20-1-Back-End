@@ -37,12 +37,13 @@ type Playlist{
   id: ID!
   user_id: Int!
   name: String!
+  views: Int!
   description: String!
-  view: Int!
   day: Int!
   month: Int!
   year: Int!
   visibility: String!
+  video_list: String!
 }
 
 type Channel{
@@ -64,18 +65,16 @@ type Comment{
   id: ID!
   user_id: Int!
   video_id: Int!
+  like: Int!
+  dislike: Int!
   day: Int!
   month: Int!
   year: Int!
-  description: String!
-  reply: String!
+  hours: Int!
+  minutes: Int!
+  seconds: Int!
+  content: String!
   comment_id: Int!
-}
-
-type Queue{
-  id: ID!
-  user_id: Int!
-  video_id: Int!
 }
 
 type Activity{
@@ -90,17 +89,69 @@ type Category{
   subscriber: String!
 }
 
+type Post{
+  id: ID!
+  channel_id: Int!
+  picture_path: String!
+  like: Int!
+  dislike: Int!
+  content: String!
+  day: Int!
+  month: Int!
+  year: Int!
+  hours: Int!
+  minutes: Int!
+  seconds: Int!
+}
+
+type Queue{
+  id: ID!
+  user_id: Int!
+  video_id: Int!
+}
+
+type Billing{
+  id: ID!
+  user_id: Int!
+  day: Int!
+  month: Int!
+  year: Int!
+  tipe: String!
+}
+
 type Query{
-  videosForHome(location: String!, visibility: String!, premium: String!): [Video!]!
+  getUser(id: ID!): User!
+  getAllVideos: [Video!]!
+  videosForHome(location: String!, visibility: String!, premium: String!, restrict: String!): [Video!]!
   relatedVideos(id: ID!, location: String!, category: String!, visibility: String!,
     premium: String!): [Video!]!
+  getActivity: [Activity!]!
   checkActivity(cond: String!, to: String!, from: String!): Activity!
+  getMyActivity(from: String!, cond: String!): [Activity!]!
   getVideo(id: ID!): Video!
   getOneCategory(category: String!): Category!
   categoryAllTime(category: String!): [Video!]!
   categoryThisWeek(category: String!): [Video!]!
   categoryThisMonth(category: String!): [Video!]!
   categoryRecently(category: String!): [Video!]!
+  getTrendingVideos: [Video!]!
+  getOneChannelByLink(link: String!): Channel!
+  getOneChannelByUser(user_id: Int!): Channel!
+  getOneChannelByID(id: ID!): Channel!
+  getChannelVideos(channel_id: Int!): [Video!]!
+  getAllPost(channel_id: Int!): [Post!]!
+  getOnePost(id: ID!): Post!
+  getTotalViews(channel_id: Int!): Video!
+  getMyPlaylist(user_id: Int!): [Playlist!]!
+  getOnePlaylist(id: ID!): Playlist!
+  getComment(video_id: Int!): [Comment!]!
+  getReply(comment_id: Int!): [Comment!]!
+  searchVideo(word: String!): [Video!]!
+  searchPlaylist(word: String!): [Playlist!]!
+  searchChannel(word: String!): [Channel!]!
+  getMyQueue(user_id: Int!): [Queue!]!
+  autocomplete(word: String!): [String!]!
+  getMyBilling(user_id: Int!): [Billing!]!
 }
 
 input newVideo{
@@ -136,6 +187,18 @@ input newUser{
   premium: String!
 }
 
+input newPlaylist{
+  user_id: Int!
+  name: String!
+  views: Int!
+  description: String!
+  day: Int!
+  month: Int!
+  year: Int!
+  visibility: String!
+  video_list: String!
+}
+
 input newChannel{
   user_id: Int!
   name: String!
@@ -150,6 +213,21 @@ input newChannel{
   channel_link: String!
 }
 
+input newComment{
+    user_id: Int!
+    video_id: Int!
+    like: Int!
+    dislike: Int!
+    day: Int!
+    month: Int!
+    year: Int!
+    hours: Int!
+    minutes: Int!
+    seconds: Int!
+    content: String!
+    comment_id: Int!
+}
+
 input newActivity{
   to: String!
   from: String!
@@ -161,6 +239,33 @@ input newCategory{
   subscriber: String!
 }
 
+input newPost{
+  channel_id: Int!
+  picture_path: String!
+  like: Int!
+  dislike: Int!
+  content: String!
+  day: Int!
+  month: Int!
+  year: Int!
+  hours: Int!
+  minutes: Int!
+  seconds: Int!
+}
+
+input newQueue{
+  user_id: Int!
+  video_id: Int!
+}
+
+input newBilling{
+  user_id: Int!
+  day: Int!
+  month: Int!
+  year: Int!
+  tipe: String!
+}
+
 type Mutation{
   createVideo(input: newVideo): Video!
   updateVideo(id: ID!, input: newVideo): Video!
@@ -170,9 +275,18 @@ type Mutation{
   updateUser(email: String!, input: newUser): User!
   getOneUser(email: String!): User!
   createChannel(input: newChannel): Channel!
-  getOneChannelByUser(user_id: Int!): Channel!
-  getOneChannelByID(id: ID!): Channel!
+  updateChannel(id: ID!, input: newChannel): Channel!
   createActivity(input: newActivity): Activity!
   deleteActivity(input: newActivity): Boolean!
   doActivity(table: String!, id: ID!, do: Int!): Boolean!
+  createPost(input: newPost): Post!
+  updatePost(id: ID!, input: newPost): Post!
+  createPlaylist(input: newPlaylist): Playlist!
+  updatePlaylist(id: ID!, input: newPlaylist): Playlist!
+  deletePlaylist(id: ID!): Boolean!
+  viewPlaylist(id: ID!): Boolean!
+  createComment(input: newComment): Comment!
+  createQueue(input: newQueue): Queue!
+  deleteQueue(id: ID!): Boolean!
+  createBilling(input: newBilling): Billing!
 }

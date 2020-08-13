@@ -8,6 +8,15 @@ type Activity struct {
 	Tipe string `json:"tipe"`
 }
 
+type Billing struct {
+	ID     string `json:"id"`
+	UserID int    `json:"user_id"`
+	Day    int    `json:"day"`
+	Month  int    `json:"month"`
+	Year   int    `json:"year"`
+	Tipe   string `json:"tipe"`
+}
+
 type Category struct {
 	ID         string `json:"id"`
 	Name       string `json:"name"`
@@ -30,27 +39,47 @@ type Channel struct {
 }
 
 type Comment struct {
-	ID          string `json:"id"`
-	UserID      int    `json:"user_id"`
-	VideoID     int    `json:"video_id"`
-	Day         int    `json:"day"`
-	Month       int    `json:"month"`
-	Year        int    `json:"year"`
-	Description string `json:"description"`
-	Reply       string `json:"reply"`
-	CommentID   int    `json:"comment_id"`
+	ID        string `json:"id"`
+	UserID    int    `json:"user_id"`
+	VideoID   int    `json:"video_id"`
+	Like      int    `json:"like"`
+	Dislike   int    `json:"dislike"`
+	Day       int    `json:"day"`
+	Month     int    `json:"month"`
+	Year      int    `json:"year"`
+	Hours     int    `json:"hours"`
+	Minutes   int    `json:"minutes"`
+	Seconds   int    `json:"seconds"`
+	Content   string `json:"content"`
+	CommentID int    `json:"comment_id"`
 }
 
 type Playlist struct {
 	ID          string `json:"id"`
 	UserID      int    `json:"user_id"`
 	Name        string `json:"name"`
+	Views       int    `json:"views"`
 	Description string `json:"description"`
-	View        int    `json:"view"`
 	Day         int    `json:"day"`
 	Month       int    `json:"month"`
 	Year        int    `json:"year"`
 	Visibility  string `json:"visibility"`
+	VideoList   string `json:"video_list"`
+}
+
+type Post struct {
+	ID          string `json:"id"`
+	ChannelID   int    `json:"channel_id"`
+	PicturePath string `json:"picture_path"`
+	Like        int    `json:"like"`
+	Dislike     int    `json:"dislike"`
+	Content     string `json:"content"`
+	Day         int    `json:"day"`
+	Month       int    `json:"month"`
+	Year        int    `json:"year"`
+	Hours       int    `json:"hours"`
+	Minutes     int    `json:"minutes"`
+	Seconds     int    `json:"seconds"`
 }
 
 type Queue struct {
@@ -100,6 +129,14 @@ type NewActivity struct {
 	Tipe string `json:"tipe"`
 }
 
+type NewBilling struct {
+	UserID int    `json:"user_id"`
+	Day    int    `json:"day"`
+	Month  int    `json:"month"`
+	Year   int    `json:"year"`
+	Tipe   string `json:"tipe"`
+}
+
 type NewCategory struct {
 	Name       string `json:"name"`
 	Subscriber string `json:"subscriber"`
@@ -117,6 +154,52 @@ type NewChannel struct {
 	IconPath    string `json:"icon_path"`
 	ArtPath     string `json:"art_path"`
 	ChannelLink string `json:"channel_link"`
+}
+
+type NewComment struct {
+	UserID    int    `json:"user_id"`
+	VideoID   int    `json:"video_id"`
+	Like      int    `json:"like"`
+	Dislike   int    `json:"dislike"`
+	Day       int    `json:"day"`
+	Month     int    `json:"month"`
+	Year      int    `json:"year"`
+	Hours     int    `json:"hours"`
+	Minutes   int    `json:"minutes"`
+	Seconds   int    `json:"seconds"`
+	Content   string `json:"content"`
+	CommentID int    `json:"comment_id"`
+}
+
+type NewPlaylist struct {
+	UserID      int    `json:"user_id"`
+	Name        string `json:"name"`
+	Views       int    `json:"views"`
+	Description string `json:"description"`
+	Day         int    `json:"day"`
+	Month       int    `json:"month"`
+	Year        int    `json:"year"`
+	Visibility  string `json:"visibility"`
+	VideoList   string `json:"video_list"`
+}
+
+type NewPost struct {
+	ChannelID   int    `json:"channel_id"`
+	PicturePath string `json:"picture_path"`
+	Like        int    `json:"like"`
+	Dislike     int    `json:"dislike"`
+	Content     string `json:"content"`
+	Day         int    `json:"day"`
+	Month       int    `json:"month"`
+	Year        int    `json:"year"`
+	Hours       int    `json:"hours"`
+	Minutes     int    `json:"minutes"`
+	Seconds     int    `json:"seconds"`
+}
+
+type NewQueue struct {
+	UserID  int `json:"user_id"`
+	VideoID int `json:"video_id"`
 }
 
 type NewUser struct {
